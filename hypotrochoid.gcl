@@ -1,0 +1,17 @@
+expression bigCenterx {50} 
+expression bigCentery {50}
+point bigCenter bigCenterx bigCentery
+
+expression bigR {50}
+expression bigOutlinex {bigCenterx + bigR}
+point bigOutline bigOutlinex bigCentery
+
+
+
+
+cmark_lt bigCenter
+cmark_lt bigOutline
+
+
+circle C1 bigCenter bigOutline
+drawcircle C1
