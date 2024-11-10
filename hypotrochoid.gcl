@@ -7,6 +7,15 @@ expression bigOutlinex {bigCenterx + bigR}
 point bigOutline bigOutlinex bigCentery
 
 
+expression smallR {25}
+expression smallOutlinex {bigOutlinex}
+expression smallCenterx {bigOutlinex - smallR}
+point smallCenter smallCenterx bigCentery
+point smallOutline smallOutlinex bigCentery
+
+
+
+
 
 
 cmark_lt bigCenter
@@ -15,3 +24,6 @@ cmark_lt bigOutline
 
 circle C1 bigCenter bigOutline
 drawcircle C1
+
+circle C2 smallCenter smallOutline
+drawcircle C2
