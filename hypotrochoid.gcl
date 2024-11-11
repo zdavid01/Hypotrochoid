@@ -19,14 +19,14 @@ expression bigR {min(pictureWidth, pictureHeight)/4}
 
 
 %drawing line speed
-point TH 0 0 56.44 56.44
+point TH 0 0 141.40 141.40
 getx th TH
 
 %%procedure
 procedure rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT} 
 {
 
-point FI 0 0 56.44 56.44
+point FI 0 0 141.40 141.40
 getx fi FI
 
 expression bigRt {bigOutlinex - bigCenterx }
@@ -138,7 +138,7 @@ call rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT3}
 }
 {}
 
-if_then_else { th > 32  }
+if_then_else { th > 32 && th < 56.6  }
 {
 %drawsegment SRT BRT	
 expression smallR {bigR * 3/7}
@@ -158,6 +158,25 @@ call rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT4}
 }
 {}
 
+if_then_else { th > 56.6  }
+{
+%drawsegment SRT BRT	
+expression smallR {bigR * 14/15}
+expression d {bigR * 1/15}
+expression xphi {
+(bigR-smallR)*cos(th) + d*cos((bigR-smallR)/smallR*th) + bigCenterx
+}
+expression yphi {
+(bigR-smallR)*sin(th) - d*sin((bigR-smallR)/smallR*th)
++ bigCentery}
+
+point PT5 xphi yphi
+trace PT5 101 203 205
+
+call rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT5} 
+
+}
+{}
 
 
 %decartes' system
@@ -180,7 +199,7 @@ ang_drawsystem_p 1 2 2 2 2
 circle C bigCenter bigOutline
 drawcircle C
 
-animation_frames 300 60
+animation_frames 1200 60
 
 
 
