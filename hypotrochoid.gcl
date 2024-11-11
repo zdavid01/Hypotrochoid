@@ -1,20 +1,35 @@
-expression bigCenterx {50} 
-expression bigCentery {50}
+%picture size settings
+expression pictureWidth {200}
+expression pictureHeight {200}
+dim pictureWidth pictureHeight
+
+
+%main parameters
+expression bigR {min(pictureWidth, pictureHeight)/2-10}
+expression smallR {bigR *3/5}
+expression d {bigR * 1}
+
+
+%outter circle plotting
+expression bigCenterx {pictureWidth/2} 
+expression bigCentery {pictureHeight/2}
 point bigCenter bigCenterx bigCentery
 
-expression bigR {50}
+%expression bigR {50}
 expression bigOutlinex {bigCenterx + bigR}
 point bigOutline bigOutlinex bigCentery
 
 
-expression smallR {25}
+%inner circle plotting
+%expression smallR {25}
 expression smallOutlinex {bigOutlinex}
 expression smallCenterx {bigOutlinex - smallR}
 point smallCenter smallCenterx bigCentery
 point smallOutline smallOutlinex bigCentery
 
 
-expression d {10}
+%D line plotting
+%expression d {10}
 expression dx {smallCenterx + d}
 point D dx bigCentery
 
@@ -23,6 +38,7 @@ point D dx bigCentery
 point TH 0 0 6.28 6.28
 getx th TH
 
+%movement of Hypotrochoid curve
 expression xphi {
 (bigR-smallR)*cos(th) + d*cos((bigR-smallR)/smallR*th) + bigCenterx
 }
@@ -39,6 +55,7 @@ trace PT 253 144 42
 point FI 0 0 6.28 6.28
 getx fi FI
 
+%movement of inner circle
 expression bigRt {bigOutlinex - bigCenterx }
 expression x1 {cos(fi)*bigRt + bigCenterx}
 expression y1 {sin(fi)*bigRt + bigCentery}
@@ -57,15 +74,14 @@ point SRT x2 y2
 cmark_rt D
 %drawsegment D smallCenter
 
-
 circle C1 bigCenter bigOutline
 drawcircle C1
 
 circle C2 SRT BRT
 drawcircle C2
 
-
 drawsegment SRT PT
+
 
 
 
