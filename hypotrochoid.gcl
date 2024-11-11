@@ -3,12 +3,22 @@ expression pictureWidth {200}
 expression pictureHeight {200}
 dim pictureWidth pictureHeight
 
-
+ 
 %main parameters
-expression bigR {min(pictureWidth, pictureHeight)/2-10}
+expression bigR {min(pictureWidth, pictureHeight)/4-10}
 expression smallR {bigR *3/5}
 expression d {bigR * 1}
 
+%rotation/curve speed parameters
+%FI and TH have to be equal
+%their value is 2*pi*LCM(R,r)/R
+%inner circle rotation speed
+point FI 0 0 18.84 18.84
+getx fi FI
+
+%drawing line speed
+point TH 0 0 18.84 18.84
+getx th TH
 
 %outter circle plotting
 expression bigCenterx {pictureWidth/2} 
@@ -35,8 +45,7 @@ point D dx bigCentery
 
 
 
-point TH 0 0 6.28 6.28
-getx th TH
+
 
 %movement of Hypotrochoid curve
 expression xphi {
@@ -52,9 +61,6 @@ trace PT 253 144 42
 
 
 
-point FI 0 0 6.28 6.28
-getx fi FI
-
 %movement of inner circle
 expression bigRt {bigOutlinex - bigCenterx }
 expression x1 {cos(fi)*bigRt + bigCenterx}
@@ -67,6 +73,20 @@ expression y2 {sin(fi)*smallRt + bigCentery}
 point SRT x2 y2
 
 
+
+
+%decartes' system
+expression angPicturex1 {5}
+expression angPicturey1 {5}
+expression angPicturex2 {pictureWidth-5}
+expression angPicturey2 {pictureHeight-5}
+
+ang_picture angPicturex1 angPicturey1 angPicturex2 angPicturey2 
+ang_origin bigCenterx bigCentery
+
+ang_unit 10
+
+ang_drawsystem_p 1 2 2 2 2
 
 
 %cmark_lt bigCenter
