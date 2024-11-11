@@ -10,19 +10,45 @@ dim pictureWidth pictureHeight
  
 %main parameters
 expression bigR {min(pictureWidth, pictureHeight)/4}
-expression smallR {bigR * 4/7}
-expression d {bigR * 4/7}
+
 
 %rotation/curve speed parameters
 %FI and TH have to be equal
 %their value is 2*pi*LCM(R,r)/R
 %inner circle rotation speed
-point FI 0 0 25.12 25.12
-getx fi FI
+
 
 %drawing line speed
-point TH 0 0 25.12 25.12
+point TH 0 0 56.44 56.44
 getx th TH
+
+%%procedure
+procedure rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT} 
+{
+
+point FI 0 0 56.44 56.44
+getx fi FI
+
+expression bigRt {bigOutlinex - bigCenterx }
+expression x1 {cos(fi)*bigRt + bigCenterx}
+expression y1 {sin(fi)*bigRt + bigCentery}
+point BRT x1 y1
+
+expression smallCenterx {bigOutlinex - smallR}
+expression smallRt {smallCenterx - bigCenterx}
+expression x2 {cos(fi)*smallRt + bigCenterx}
+expression y2 {sin(fi)*smallRt + bigCentery}
+point SRT x2 y2
+
+circle C SRT BRT
+drawcircle C
+
+drawsegment PT SRT
+cmark_lt PT
+cmark_lt SRT
+}
+
+
 
 %outter circle plotting
 expression bigCenterx {pictureWidth/2} 
@@ -36,22 +62,24 @@ point bigOutline bigOutlinex bigCentery
 
 %inner circle plotting
 %expression smallR {25}
-expression smallOutlinex {bigOutlinex}
-expression smallCenterx {bigOutlinex - smallR}
-point smallCenter smallCenterx bigCentery
-point smallOutline smallOutlinex bigCentery
+%expression smallOutlinex {bigOutlinex}
+%expression smallCenterx {bigOutlinex - smallR}
+%point smallCenter smallCenterx bigCentery
+%point smallOutline smallOutlinex bigCentery
 
 
 %D line plotting
 %expression d {10}
-expression dx {smallCenterx + d}
-point D dx bigCentery
+%expression dx {smallCenterx + d}
+%point D dx bigCentery
 
 
+%%%% 1
+if_then_else { th < 6.35 }
+{
 
-
-
-%movement of Hypotrochoid curve
+expression smallR {bigR * 1/2}
+expression d {bigR * 1/5}
 expression xphi {
 (bigR-smallR)*cos(th) + d*cos((bigR-smallR)/smallR*th) + bigCenterx
 }
@@ -59,23 +87,76 @@ expression yphi {
 (bigR-smallR)*sin(th) - d*sin((bigR-smallR)/smallR*th)
 + bigCentery}
 
-point PT xphi yphi
-
-trace PT 253 144 42
-
+point PT1 xphi yphi
+trace PT1 201 103 105
 
 
-%movement of inner circle
-expression bigRt {bigOutlinex - bigCenterx }
-expression x1 {cos(fi)*bigRt + bigCenterx}
-expression y1 {sin(fi)*bigRt + bigCentery}
-point BRT x1 y1
+call rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT1}
 
-expression smallRt {smallCenterx - bigCenterx}
-expression x2 {cos(fi)*smallRt + bigCenterx}
-expression y2 {sin(fi)*smallRt + bigCentery}
-point SRT x2 y2
 
+}
+{}
+%%%% 2
+if_then_else { th  > 6.35 && th < 25.5 }
+{
+
+expression smallR {bigR * 3/5}
+expression d {bigR * 1}
+expression xphi {
+(bigR-smallR)*cos(th) + d*cos((bigR-smallR)/smallR*th) + bigCenterx
+}
+expression yphi {
+(bigR-smallR)*sin(th) - d*sin((bigR-smallR)/smallR*th)
++ bigCentery}
+
+point PT2 xphi yphi
+trace PT2 101 103 205
+
+call rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT2} 
+
+}
+{}
+%%%% 3
+if_then_else { th > 25.5  && th < 32}
+{
+%drawsegment SRT BRT	
+expression smallR {bigR * 1/3}
+expression d {bigR * 1/3}
+expression xphi {
+(bigR-smallR)*cos(th) + d*cos((bigR-smallR)/smallR*th) + bigCenterx
+}
+expression yphi {
+(bigR-smallR)*sin(th) - d*sin((bigR-smallR)/smallR*th)
++ bigCentery}
+
+point PT3 xphi yphi
+trace PT3 101 203 105
+
+call rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT3} 
+
+
+}
+{}
+
+if_then_else { th > 32  }
+{
+%drawsegment SRT BRT	
+expression smallR {bigR * 3/7}
+expression d {bigR * 2/7}
+expression xphi {
+(bigR-smallR)*cos(th) + d*cos((bigR-smallR)/smallR*th) + bigCenterx
+}
+expression yphi {
+(bigR-smallR)*sin(th) - d*sin((bigR-smallR)/smallR*th)
++ bigCentery}
+
+point PT4 xphi yphi
+trace PT4 201 203 105
+
+call rotate_circle {bigOutlinex bigCenterx smallR bigCentery d bigR PT4} 
+
+}
+{}
 
 
 
@@ -93,25 +174,13 @@ ang_unit 10
 ang_drawsystem_p 1 2 2 2 2
 
 
-%cmark_lt bigCenter
-%cmark_lt bigOutline
-%cmark_rt D
-
-cmark_rt PT
-cmark_lt SRT
-%drawsegment D smallCenter
-
-circle C1 bigCenter bigOutline
-drawcircle C1
-
-circle C2 SRT BRT
-drawcircle C2
-
-drawsegment SRT PT
 
 
 
+circle C bigCenter bigOutline
+drawcircle C
 
 animation_frames 300 60
+
 
 
