@@ -3,21 +3,25 @@ expression pictureWidth {200}
 expression pictureHeight {200}
 dim pictureWidth pictureHeight
 
+%examples (bigR can stay the same):
+%(smallR, d, maxAngleValue) -
+% - (1/2, 1/10, 6.28); (3/5, 1, 18.84);  (1/3, 1/3, 6.28); (14/15, 1/15, 87.92); (3/8, 1/4, 18.84 ); (4/7; 2/7; 25.12) 
+%the values are times bigR
  
 %main parameters
-expression bigR {min(pictureWidth, pictureHeight)/4-10}
-expression smallR {bigR *3/5}
-expression d {bigR * 1}
+expression bigR {min(pictureWidth, pictureHeight)/4}
+expression smallR {bigR * 4/7}
+expression d {bigR * 4/7}
 
 %rotation/curve speed parameters
 %FI and TH have to be equal
 %their value is 2*pi*LCM(R,r)/R
 %inner circle rotation speed
-point FI 0 0 18.84 18.84
+point FI 0 0 25.12 25.12
 getx fi FI
 
 %drawing line speed
-point TH 0 0 18.84 18.84
+point TH 0 0 25.12 25.12
 getx th TH
 
 %outter circle plotting
@@ -91,7 +95,10 @@ ang_drawsystem_p 1 2 2 2 2
 
 %cmark_lt bigCenter
 %cmark_lt bigOutline
-cmark_rt D
+%cmark_rt D
+
+cmark_rt PT
+cmark_lt SRT
 %drawsegment D smallCenter
 
 circle C1 bigCenter bigOutline
