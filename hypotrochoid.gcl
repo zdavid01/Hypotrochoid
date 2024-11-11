@@ -7,7 +7,7 @@ expression bigOutlinex {bigCenterx + bigR}
 point bigOutline bigOutlinex bigCentery
 
 
-expression smallR {20}
+expression smallR {25}
 expression smallOutlinex {bigOutlinex}
 expression smallCenterx {bigOutlinex - smallR}
 point smallCenter smallCenterx bigCentery
@@ -20,7 +20,7 @@ point D dx bigCentery
 
 
 
-point TH 0 0 18.84 18.84
+point TH 0 0 6.28 6.28
 getx th TH
 
 expression xphi {
@@ -34,8 +34,20 @@ point PT xphi yphi
 
 trace PT 253 144 42
 
-animation_frames 300 60
 
+
+point FI 0 0 6.28 6.28
+getx fi FI
+
+expression bigRt {bigOutlinex - bigCenterx }
+expression x1 {cos(fi)*bigRt + bigCenterx}
+expression y1 {sin(fi)*bigRt + bigCentery}
+point BRT x1 y1
+
+expression smallRt {smallCenterx - bigCenterx}
+expression x2 {cos(fi)*smallRt + bigCenterx}
+expression y2 {sin(fi)*smallRt + bigCentery}
+point SRT x2 y2
 
 
 
@@ -49,8 +61,14 @@ cmark_rt D
 circle C1 bigCenter bigOutline
 drawcircle C1
 
-circle C2 smallCenter smallOutline
+circle C2 SRT BRT
 drawcircle C2
 
-drawsegment smallCenter PT
+
+drawsegment SRT PT
+
+
+
+animation_frames 300 60
+
 
