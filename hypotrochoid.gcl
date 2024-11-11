@@ -7,19 +7,43 @@ expression bigOutlinex {bigCenterx + bigR}
 point bigOutline bigOutlinex bigCentery
 
 
-expression smallR {25}
+expression smallR {20}
 expression smallOutlinex {bigOutlinex}
 expression smallCenterx {bigOutlinex - smallR}
 point smallCenter smallCenterx bigCentery
 point smallOutline smallOutlinex bigCentery
 
 
+expression d {10}
+expression dx {smallCenterx + d}
+point D dx bigCentery
+
+
+
+point TH 0 0 18.84 18.84
+getx th TH
+
+expression xphi {
+(bigR-smallR)*cos(th) + d*cos((bigR-smallR)/smallR*th) + bigCenterx
+}
+expression yphi {
+(bigR-smallR)*sin(th) - d*sin((bigR-smallR)/smallR*th)
++ bigCentery}
+
+point PT xphi yphi
+
+trace PT 253 144 42
+
+animation_frames 300 60
 
 
 
 
-cmark_lt bigCenter
-cmark_lt bigOutline
+
+%cmark_lt bigCenter
+%cmark_lt bigOutline
+cmark_rt D
+%drawsegment D smallCenter
 
 
 circle C1 bigCenter bigOutline
@@ -27,3 +51,6 @@ drawcircle C1
 
 circle C2 smallCenter smallOutline
 drawcircle C2
+
+drawsegment smallCenter PT
+
